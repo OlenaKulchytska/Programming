@@ -39,61 +39,17 @@ void copy(FILE *f, FILE *f2) {
         while (fgets(buffer2,255,f)) {
             buffer[n] = strdup(buffer2);
             buffer3[n] = strdup(buffer2);
-/*
-            printf("%s",buffer[n]);
-*/
             token = strtok(buffer2, " ");
             while (token != NULL) {
                 str[i] = strdup(token);
-/*
-                printf("%s\n",str[i]);
-*/
                 token = strtok(NULL," ");
                 i++;
                 counter++;
             }
-/*
-            printf("%s\n",buffer[n]);
-*/
             n++;
         }
         i=0;
         printf("\n\n\n");
-/*        for (int j = 0; j < n; ++j) {
-            printf("%s",buffer[j]);
-            for (int k = 0; k < counter; ++k) {
-                token = strtok(buffer[j]," ");
-                while (token!=NULL)
-                {
-                    if(strcmp(token,str[k])==0)
-                    {
-                        m++;
-                    }
-
-                    printf("%d  -  %s  -  %s\n",m,token,str[k]);
-
-                    if (m>=2)
-                    {
-                        printf("%s\n",buffer[j]);
-                        checker=1;
-                        break;
-                    }
-                    token=strtok(NULL," ");
-                    if(token==NULL)
-                    {
-                        checker=1;
-                    }
-
-                }
-                if (checker==1)
-                {
-                    break;
-                }
-                printf("%d-%d  %s\n",j,k,str[k]);
-            }
-            m=0;
-
-        }*/
 int number[n];
         for (int j = 0; j < counter; ++j) {
             for (int k = 0; k < n; ++k) {
@@ -107,15 +63,9 @@ int number[n];
                     }
                 }
                 token=strtok(buffer[k]," ");
-/*
-                if (strcmp(word,str[j])==0) j++;
-*/
 
                 while (token!=NULL)
                 {
-/*
-                    printf("%d - %d - %d - %s - %s\n",j,k,m,token,str[j]);
-*/
 
                     if(strcmp(token,str[j])==0)
                     {
@@ -132,9 +82,6 @@ int number[n];
                         checker=1;
                         break;
                     }
-/*
-                    printf("%d - %d - %s\n",j+1,k+1,token);
-*/
                     token=strtok(NULL," ");
                 }
                 m=0;
