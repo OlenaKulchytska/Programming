@@ -1,108 +1,68 @@
 #include <stdio.h>
+#include <stdarg.h>
 #include <math.h>
-void Input(int coord,...)
+
+double Find_Leangth(int n,...)
 {
-    printf("%d",coord);
-    double l[coord];
-    int da=coord;
-    int *x=&coord;
-    int i=0;
-    while (da!=0){
-        printf("Enter coordinates (x%d;y%d): \n",i+1,i+1);
-
-        scanf("%d %d",&*x,&*y);
-
-    i++;
-    ++x;
-    ++y;
-    da--;
+    int M[n];
+    int ro = (n/4);
+    double L[ro];
+    va_list list;
+    int k=0;
+    int j = 0;
+    va_start(list,n);
+    for (j = 0; j < n; ++j) {
+        M[j] = va_arg(list, int);
+    }
+    for (int i = 0; i < n;i+=4) {
+        L[k] = sqrt(M[i]*M[i+2]+M[i+1]*M[i+3]);
+        printf("\n%lf\n",L[k]);
+        k++;
 
     }
-}
-double Find_Length(int coord,...)
-{
-    for (int i = 0; i < coord ; ++i) {
- //       l[i] = sqrt(x[i]*x[i]+y[i]*y[i]);
-        return l[i];
-    }
-}
-/*
-
-double Find_Square(double p, double s, double l[10])
-{
-    p = (l[1] + l[2] + l[0]) / 2;
-    s = sqrt(p * (p - l[1]) * (p - l[2]) * (p - l[0]));
-    return s;
+    return 0;
 }
 
-double Find_Square_En(int coord,double gg,int x[10],int y[10],double s)
+double Square(int x1,int y1,int x2,int y2,int x3,int y3)
 {
-    for (int i = 0; i < coord - 1; ++i) {
-        gg += (x[i] * y[i + 1] - x[i + 1] * y[i]);
+    double p=0;
+    double sq=0;
+    double l1=sqrt(x1*x2+y1*y2);
+    double l2=sqrt(x3*x2+y3*y2);
+    double l3=sqrt(x1*x3+y1*y3);
+    p=(l1+l2+l3)/2;
+    sq=sqrt(p*(p-l1)*(p-l2)*(p-l3));
+    printf("\n%lf\n",sq);
+    return 0;
+}
+
+double Square_en(int n,...)
+{
+    int M[n];
+    double Sq=0;
+    double ex=0;
+    va_list list;
+    int k=0;
+    int j = 0;
+    va_start(list,n);
+    for (j = 0; j < n; ++j) {
+        M[j] = va_arg(list, int);
     }
-    s = 0.5 * fabs(gg);
-    return s;
-}*/
-void Output(int coord,...)
-{
-    for (int j = 0; j < coord; ++j)
+
+    for (int i = 0; i < n-3; ++i)
     {
-
-        printf("(%d;%d)",*x[j],y[j]);
+        ex+=fabs((M[i]+M[i+2])*(M[i+1]-M[i+3]));
     }
-    printf("\n%lf\n",s);
+    Sq=0.5*ex;
+    printf("\n%lf\n",Sq);
+    return 0;
 }
+
 int main() {
-    int coord;
-    double p=0,s=0;
-    printf("Enter an amount of coordinates: ");
-    scanf("%d",&coord);
-    int x[coord],y[coord];
-    double l[coord];
-    Input(coord);
-/*
-    // INPUT
-*/
-/*    for (int i = 0; i < coord ; i++) {
+    Find_Leangth(8,1,2,3,4,2,3,4,5);
+         //x1 y1 x2 y2 x3 y3
+    Square(2, 3, 3, 4, 5, 6);
 
-        printf("Enter coordinates (x%d;y%d): \n",i+1,i+1);
-
-        scanf("%d %d",&x[i],&y[i]);
-
-    }*//*
-
-    Input(coord,x,y);
-
-
-    //LENGTH
-
-*/
-/*    for (int i = 0; i < coord ; ++i) {
-        l[i] = sqrt(x[i]*x[i]+y[i]*y[i]);
-    }*//*
-
-Find_Length(coord,x,y,l);
-    //SQUARE_TRIANGLE
-    if (coord==3) {
-
-        Find_Square(p,s,l);
-
-    } else
-    {
-        s=0;
-    }
-    double gg=0;
-    //SQUARE_EN
-    if(coord>3) {
-        Find_Square_En(coord,gg,x,y,s);
-    }
-
-
-    //OUTPUT
-
-Output(coord,x,y,s);
-
-*/
-
+    Square_en(13,2,3,4,5,6,7,8,9,10,11,12,13,14);
     return 0;
 }
