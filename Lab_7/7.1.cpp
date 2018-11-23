@@ -14,20 +14,16 @@ int del(int *M,int n){
     }
     cout<<endl;
 }
-char del() {
-    int n,number=0;
-    cout<<"Enter the amount of words:";
-    cin>>n;
-    char str[20];
-    char str2[20][n/2];
+char del(char *str[100],int n) {
+    int number=0;
+
     for (int i = 1; i <= n; i++) {
-        cout<<"Enter word"<<endl;
-        cin>>str;
-        if(i%2!=0)
-        {
-            cout<<str<<endl;
+
+        if (i % 2 != 0) {
+            cout << str[i] << endl;
         }
     }
+
 }
 
 int main()
@@ -43,9 +39,21 @@ int main()
         cout << "Enter the number:" << endl;
         cin >> M[i];
     }
+    int num;
+    cout<<"Enter the amount of words:";
+    cin>>num;
+    char *str[20];
+    char token[20];
+
+    for (int i = 1; i <= num; i++) {
+        cout << "\nEnter word: ";
+        scanf("%s",token);
+        str[i] = strdup(token);
+    }
 
     del(M,n);
-    del();
+    del(str,num);
+
 
     return 0;
 }
