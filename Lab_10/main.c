@@ -1,57 +1,85 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-#define MAX_LENGTH 255
-
-char **makearray(int n) {
-    char **mas;
-    char buffer[MAX_LENGTH+1];
-    mas=(char**)malloc(n*sizeof(char*));
-    for(int i=0;i<n;i++) {
-        fgets(buffer, MAX_LENGTH, stdin);
-        if (buffer[strlen(buffer)-1]=='\n')
-            buffer[strlen(buffer)-1]='\0';
-        mas[i]=(char*)malloc(strlen(buffer)*sizeof(char));
-        strcpy(mas[i],buffer);
+int **make_mas(int rows,int columns)
+{
+    int **mas;
+    mas=(int**)malloc(rows*sizeof(int*));
+    for(int i=0;i<rows;i++){
+        mas[i]=(int*)malloc(columns*sizeof(int));
+    }
+    for(int i=0;i<rows;i++){
+        for(int j=0; j<columns;j++){
+            mas[i][j]=rand()%200;
+        }
     }
     return mas;
-};
-
-void printarray(char **arr, int n) {
-    for (int i=0; i<n; i++)
-        printf("%s   ", arr[i]);
-    printf("\n");
-};
-
-char **delete(char **arr,int n,int k)
+}
+int main()
 {
-    int j=k;
-    int i = 0;
-    char **mas2;
-    char buffer[MAX_LENGTH+1];
-    mas2=(char**)malloc((n-j)*sizeof(char*));
-
-    for(;j<n;j++)
-    {
-        mas2[i]=(char*)malloc(strlen(arr[j])*sizeof(char*));
-
-        strcpy(mas2[i],arr[j]);
-        i++;
-    }
-    return mas2;
-};
-int main() {
-    char **mas2;
-    int n,rows;
-    printf("Enter array length:");
-    scanf("%d", &n);
-    getchar();
-    char **array = makearray(n);
-    printarray(array,n);
-    printf("Enter an amount of rows to delete: ");
+    int max=0;
+    int max_r,max_c;
+    int rows,columns;
+    printf("Enter rows:\n");
     scanf("%d",&rows);
-   mas2 = delete(array,n,rows);
-   printarray(mas2,n-rows);
+    printf("Enter columns:\n");
+    scanf("%d",&columns);
+    int **array;
+    array=make_mas(rows, columns);
+
+    for(int i=0;i<rows;i++){
+        for(int j=0; j<columns;j++){
+            printf("%d\t",array[i][j]);
+        }
+        printf("\n");
+    }
+    for(int i=0;i<rows;i++){
+        for(int j=0; j<columns;j++){
+            if(max<array[i][j]) {
+                max=array[i][j];
+                max_r = i;
+                max_c = j;
+            }
+        }
+    }
+    printf("%d\n",max);
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<columns;j++){
+            if(max_r==i||max_c==j){
+                array[i][j]=-1;
+            }
+        }
+    }
+
+    for(int i=0;i<rows;i++){
+        for(int j=0; j<columns-1;j++){
+            if(array[i][j]==-1){
+                array[i][j]= array[i][j+1];
+                array[i][j+1] = -1;
+            }
+        }
+    }
+
+    for(int i=0;i<rows-1;i++){
+        for(int j=0; j<columns;j++){
+            if(array[i][j]==-1){
+                array[i][j]= array[i+1][j];
+                array[i+1][j] = -1;
+            }
+        }
+    }
+    printf("\n");
+    for(int i=0;i<rows;i++){
+        for(int j=0; j<columns;j++){
+            if(array[i][j] != -1){
+                printf("%d\t",array[i][j]);
+            }
+
+        }
+        printf("\n");
+    }
+    for (int i = 0; i < rows; ++i) {
+        free(array[i]);
+    }
+    free(array);
     return 0;
 }
